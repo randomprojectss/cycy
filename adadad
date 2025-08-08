@@ -1,4 +1,4 @@
-
+-- dddddd
 -- variables
 	local uis = cloneref(game:GetService("UserInputService"))
 	local players = cloneref(game:GetService("Players"))
