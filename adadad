@@ -1233,6 +1233,8 @@
 
 -- [ ... your variables, helpers, themes, and utility functions are unchanged ... ]
 
+-- [ ... your variables, helpers, themes, and utility functions are unchanged ... ]
+
 function library:window(properties)
     local window = {opened = true}
     local opened = {}
@@ -1323,17 +1325,12 @@ function library:window(properties)
         end
     end
 
-      -- MAIN PANEL CONTENT (example tabs and controls)
+    -- MAIN PANEL CONTENT
     local main_column = setmetatable(main_panel.items, library):column()
     local tab1 = main_panel:tab({name = "Aimbot"})
     local section1 = tab1:section({name = "General"})
     section1:toggle({name = "Enable Aimbot", flag = "aimbot_enabled"})
     section1:slider({name = "FOV", flag = "aimbot_fov", min = 1, max = 360, default = 90})
-
-    local tab2 = main_panel:tab({name = "Visuals"})
-    local section2 = tab2:section({name = "ESP"})
-    section2:toggle({name = "Box ESP", flag = "box_esp"})
-    section2:colorpicker({name = "Box Color", flag = "box_color", color = Color3.fromRGB(0,255,0)})
 
     -- STYLE PANEL CONTENT
     local watermark = library:watermark({default = os.date('Atlanta |  - %b %d %Y - %H:%M:%S')})
@@ -1429,47 +1426,32 @@ function library:window(properties)
     end})
 
     -- CONFIG PANEL CONTENT
-    local config_items = config_panel.items
-    local config_column = setmetatable(config_items, library):column()
-    local config_section = config_column:section({name = "Options"})
-    config_holder = config_section:list({flag = "config_name_list"})
-    config_section:textbox({flag = "config_name_text_box"})
-    config_section:button_holder({})
-    config_section:button({name = "Create", callback = function()
-        writefile(library.directory .. "/configs/" .. flags["config_name_text_box"] .. ".cfg", library:get_config())
-        library:config_list_update()
-    end})
-    config_section:button({name = "Delete", callback = function()
-        delfile(library.directory .. "/configs/" .. flags["config_name_list"] .. ".cfg")
-        library:config_list_update()
-    end})
-    config_section:button_holder({})
-    config_section:button({name = "Load", callback = function()
-        library:load_config(readfile(library.directory .. "/configs/" .. flags["config_name_list"] .. ".cfg"))
-        library:notification({text = "Loaded Config: " .. flags["config_name_list"], time = 3})
-    end})
-    config_section:button({name = "Save", callback = function()
-        writefile(library.directory .. "/configs/" .. flags["config_name_list"] .. ".cfg", library:get_config())
-        library:config_list_update()
-        library:notification({text = "Saved Config: " .. flags["config_name_list"], time = 3})
-    end})
-    config_section:button_holder({})
-    config_section:button({name = "Refresh Configs", callback = function()
-        library:config_list_update()
-    end})
-    config_section:button_holder({})
-    config_section:button({name = "Unload Config", callback = function()
-        library:load_config(library.old_config)
-    end})
-    config_section:button({name = "Unload Menu", callback = function()
-        library:load_config(library.old_config)
-        for _, gui in library.guis do gui:Destroy() end
-        for _, connection in library.connections do connection:Disconnect() end
-        blur:Destroy()
+    local config_column = setmetatable(config_panel.items, library):column()
+    local config_section = config_column:section({name = "Configurations"})
+
+    config_section:button({name = "Load Config", callback = function()
+        print("Load Config pressed")
+        -- your load config logic here
     end})
 
-    return setmetatable(window, library)
+    config_section:button({name = "Save Config", callback = function()
+        print("Save Config pressed")
+        -- your save config logic here
+    end})
+
+    config_section:button({name = "Delete Config", callback = function()
+        print("Delete Config pressed")
+        -- your delete config logic here
+    end})
+
+    config_section:dropdown({name = "Config List", options = {"Default", "Custom1", "Custom2"}, flag = "config_list", callback = function(value)
+        print("Config selected:", value)
+    end})
+
+    -- END OF FUNCTION RETURN
+    return window
 end
+
 
 
 
