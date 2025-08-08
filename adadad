@@ -1232,6 +1232,8 @@
 
 -- [ ... your variables, helpers, themes, and utility functions are unchanged ... ]
 
+-- [ ... your variables, helpers, themes, and utility functions are unchanged ... ]
+
 function library:window(properties)
     local window = {opened = true}
     local opened = {}
@@ -1322,101 +1324,17 @@ function library:window(properties)
         end
     end
 
-    local main_window = library:panel({
-        name = properties and properties.name or "Atlanta | ", 
-        size = dim2(0, 604, 0, 628),
-        position = dim2(0, (camera.ViewportSize.X / 2) - 302 - 96, 0, (camera.ViewportSize.Y / 2) - 421 - 12),
-        image = "rbxassetid://98823308062942",
-    })
+      -- MAIN PANEL CONTENT (example tabs and controls)
+    local main_column = setmetatable(main_panel.items, library):column()
+    local tab1 = main_panel:tab({name = "Aimbot"})
+    local section1 = tab1:section({name = "General"})
+    section1:toggle({name = "Enable Aimbot", flag = "aimbot_enabled"})
+    section1:slider({name = "FOV", flag = "aimbot_fov", min = 1, max = 360, default = 90})
 
-    local items = main_window.items
-
-    window["tab_holder"] = library:create("Frame", {
-        Parent = items.holder,
-        Name = " ",
-        BackgroundTransparency = 1,
-        Size = dim2(1, 0, 0, 22),
-        BorderColor3 = rgb(0, 0, 0),
-        ZIndex = 5,
-        BorderSizePixel = 0,
-        BackgroundColor3 = rgb(255, 255, 255)
-    })
-
-    library:create("UIListLayout", {
-        Parent = window["tab_holder"],
-        FillDirection = Enum.FillDirection.Horizontal,
-        HorizontalFlex = Enum.UIFlexAlignment.Fill,
-        Padding = dim(0, 2),
-        SortOrder = Enum.SortOrder.LayoutOrder
-    })
-
-    local section_holder = library:create("Frame", {
-        Parent = items.holder,
-        Name = " ",
-        BackgroundTransparency = 1,
-        Position = dim2(0, -1, 0, 19),
-        BorderColor3 = rgb(0, 0, 0),
-        Size = dim2(1, 0, 1, -22),
-        BorderSizePixel = 0,
-        BackgroundColor3 = rgb(255, 255, 255)
-    })
-    window["section_holder"] = section_holder
-
-    local outline = library:create("Frame", {
-        Parent = section_holder,
-        Name = "\0",
-        Position = dim2(0, 1, 0, 1),
-        BorderColor3 = rgb(0, 0, 0),
-        Size = dim2(1, 0, 1, 2),
-        BorderSizePixel = 0,
-        BackgroundColor3 = themes.preset.outline
-    })
-    
-    library:apply_theme(outline, "outline", "BackgroundColor3") 
-
-    local inline = library:create("Frame", {
-        Parent = outline,
-        Name = "\0",
-        Position = dim2(0, 1, 0, 1),
-        BorderColor3 = rgb(0, 0, 0),
-        Size = dim2(1, -2, 1, -2),
-        BorderSizePixel = 0,
-        BackgroundColor3 = themes.preset.inline
-    })
-    
-    library:apply_theme(inline, "inline", "BackgroundColor3") 
-
-    local background = library:create("Frame", {
-        Parent = inline,
-        Name = "\0",
-        Position = dim2(0, 1, 0, 1),
-        BorderColor3 = rgb(0, 0, 0),
-        Size = dim2(1, -2, 1, -2),
-        BorderSizePixel = 0,
-        BackgroundColor3 = rgb(255, 255, 255)
-    })
-
-    library.section_holder = background
-
-    library:create("UIPadding", {
-        Parent = background,
-        PaddingTop = dim(0, 4),
-        PaddingBottom = dim(0, 4),
-        PaddingRight = dim(0, 4),
-        PaddingLeft = dim(0, 4)
-    })
-
-    local UIGradient = library:create("UIGradient", {
-        Parent = background,
-        Rotation = 90,
-        Color = rgbseq{
-            rgbkey(0, rgb(41, 41, 55)),
-            rgbkey(1, rgb(35, 35, 47))
-        }
-    })
-    
-    library:apply_theme(UIGradient, "contrast", "Color") 
-    library:make_resizable(items.main_holder) 
+    local tab2 = main_panel:tab({name = "Visuals"})
+    local section2 = tab2:section({name = "ESP"})
+    section2:toggle({name = "Box ESP", flag = "box_esp"})
+    section2:colorpicker({name = "Box Color", flag = "box_color", color = Color3.fromRGB(0,255,0)})
 
     -- STYLE PANEL CONTENT
     local watermark = library:watermark({default = os.date('Atlanta |  - %b %d %Y - %H:%M:%S')})
@@ -1553,6 +1471,7 @@ function library:window(properties)
 
     return setmetatable(window, library)
 end
+
 
 
     -- Style content (as before)
