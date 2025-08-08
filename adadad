@@ -1,4 +1,3 @@
--- ddd
 
 -- variables
 	local uis = cloneref(game:GetService("UserInputService"))
